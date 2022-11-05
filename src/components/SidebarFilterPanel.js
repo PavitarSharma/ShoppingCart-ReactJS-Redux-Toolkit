@@ -1,17 +1,24 @@
 import Slider from "@mui/material/Slider";
 
-const SidebarFilterPanel = ({ categories, price, handlePriceChange }) => {
+import { useDispatch, useSelector } from "react-redux";
+import { setPriceFilter, setRatingFilter, setDiscountFilter, setCategoryFilter } from "../redux/features/filterSlice";
+
+const SidebarFilterPanel = ({ categories }) => {
+    const dispatch = useDispatch();
+  const price = useSelector((state) => state.filters.price);
+  const rating = useSelector((state) => state.filters.rating);
+  const discount = useSelector((state) => state.filters.discount);
   return (
     <div className=" w-[200px] shadow-lg h-[500px] fixed left-1 top-[58px] flex flex-col px-2 py-10 backdrop-blur-sm bg-white/30">
       <div className="w-[150px] ml-auto mr-auto flex flex-col gap-2">
         <p className="font-bold">Price</p>
         <Slider
-          onChange={handlePriceChange}
-          value={price}
           valueLabelDisplay="auto"
           aria-labelledby="range-slider"
           min={0}
           max={1500}
+          value={price}
+          onChange={(event, value) => dispatch(setPriceFilter(value))}
         />
       </div>
 
@@ -34,7 +41,9 @@ const SidebarFilterPanel = ({ categories, price, handlePriceChange }) => {
           valueLabelDisplay="auto"
           aria-labelledby="range-slider"
           min={0}
-          max={30}
+          max={20}
+          value={discount}
+          onChange={(event, value) => dispatch(setDiscountFilter(value))}
         />
       </div>
 
@@ -45,6 +54,8 @@ const SidebarFilterPanel = ({ categories, price, handlePriceChange }) => {
           aria-labelledby="range-slider"
           min={0}
           max={5}
+          value={rating}
+          onChange={(event, value) => dispatch(setRatingFilter(value))}
         />
       </div>
     </div>

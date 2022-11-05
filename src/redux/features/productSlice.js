@@ -65,5 +65,5 @@ const productSlice = createSlice({
   },
 });
 
-export const { handlePriceFilter } = productSlice.actions;
+export const { handlePriceFilter, handleSearchProducts } = productSlice.actions;
 export default productSlice.reducer;

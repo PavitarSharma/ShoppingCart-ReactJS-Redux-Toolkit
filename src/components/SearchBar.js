@@ -1,5 +1,5 @@
 
-const SearchBar = () => {
+const SearchBar = ({ handleSearch}) => {
 
   return (
     <div className="w-full flex items-center justify-center mt-5 mb-2">
@@ -7,7 +7,7 @@ const SearchBar = () => {
         <input
           type="text"
           name="search"
-      
+          onChange={handleSearch}
           placeholder="Search for products..."
           className="border-1 h-7 border-black outline-none text-sm px-1 py-1"
         />

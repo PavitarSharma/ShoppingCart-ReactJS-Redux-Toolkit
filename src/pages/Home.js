@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Products, SearchBar } from "../components";
 import Filters from "../components/Filters";
-import { fetchProducts, STATUSES } from "../redux/features/productSlice";
+import { fetchProducts, handleSearchProducts, STATUSES } from "../redux/features/productSlice";
 import { FaFilter } from "react-icons/fa";
 import SidebarFilterPanel from "../components/SidebarFilterPanel";
+import { setCategoryFilter } from "../redux/features/filterSlice";
 const categories = [
   "Smartphones",
   "Laptops",
@@ -16,35 +17,47 @@ const categories = [
 const Home = () => {
   const dispatch = useDispatch();
   const { products, status } = useSelector((state) => state.product.products);
-  const [price, setPrice] = useState([0, 1500]);
-  const [category, setCategory] = useState("");
+  const { price, rating, discount, category } = useSelector(state => state.filters)
 
-  const [ratings, setRatings] = useState(0);
-
+console.log(products);
+  const [searchTerm, setSearchTerm] = useState("")
   const [openFilter, setOpenFilter] = useState(false);
   const openFilterPanel = () => setOpenFilter(!openFilter);
 
-  const priceHandler = (event, newPrice) => {
-    setPrice(newPrice);
-  };
+
 
   useEffect(() => {
-    dispatch(fetchProducts((price, category, ratings)))
-  }, [dispatch, price, category, ratings]);
+    dispatch(fetchProducts())
+  }, [dispatch]);
 
   useEffect(() => {
     document.title = "Shoping Website";
   }, []);
 
+  const searchProducts = products?.filter(product => {
+    if(!searchTerm.length) return product
+    if(!product.title) return
+    return product.title.toLowerCase().includes(searchTerm.toLowerCase())
+  })
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value)
+  }
+
+  const handleFilterCategory = (category) => {
+    const filterCategory = products?.filter(product => product.category === category)
+    dispatch(setCategoryFilter(filterCategory))
+  }
+
   return (
     <div>
       <div className="flex gap-4 justify-between px-4">
         <div className="hidden md:block">
-          <Filters categories={categories} />
+          <Filters categories={categories} handleFilterCategory={handleFilterCategory} />
         </div>
         <div className="flex flex-col items-center justify-center w-full">
           <div className="flex items-center">
-            <SearchBar />
+            <SearchBar handleSearch={handleSearch} />
             <div
               onClick={openFilterPanel}
               className={`bg-black text-white py-[10px] px-3 md:hidden block rounded cursor-pointer ml-2 mt-3 duration-1000 transition-all`}
@@ -52,11 +65,15 @@ const Home = () => {
               <FaFilter onClick={openFilterPanel} />
             </div>
 
-            {openFilter && <SidebarFilterPanel categories={categories} price={price} handlePriceChange={priceHandler} />}
+            {openFilter && <SidebarFilterPanel categories={categories} />}
           </div>
-          <div className="flex flex-wrap gap-4 p-2 items-center justify-center mr-auto ml-auto w-full border-2 mt-4">
-            {products &&
-              products?.map((product) => (
+          <div className="flex flex-wrap gap-4 p-2 items-center justify-center mr-auto ml-auto w-full mt-4">
+            {searchProducts &&
+              searchProducts
+              ?.filter((product) => product.price <= price)
+              ?.filter((product => product.rating <= rating))
+              ?.filter((product) => product.discountPercentage <= discount)
+              ?.map((product) => (
                 <Products key={product.id} product={product} />
               ))}
           </div>
