@@ -1,3 +1,4 @@
+<img width="956" alt="Screenshot_20221105_122438" src="https://user-images.githubusercontent.com/76960865/200179723-8a3e43f7-715e-4de9-890b-b6e468f963ef.png">
 # Shopping Cart Website ReactJS Redux Toolkit
 
 Website Link: -> https://shoppingcart-react-reduxtoolkit.netlify.app
