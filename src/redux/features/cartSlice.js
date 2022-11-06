@@ -21,7 +21,11 @@ const cartSlice = createSlice({
 
     incrementQuantity(state, action) {
       const item = state.cart.find((item) => item.id === action.payload);
-      item.quantity++;
+      if(item.quantity < 10) {
+        item.quantity++;
+      }else {
+        alert("You can not accessed more than 10")
+      }
     },
 
     decrementQuantity(state, action) {

@@ -8,7 +8,7 @@ import { addToCart } from "../redux/features/cartSlice";
 const ProductDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { product, status } = useSelector((state) => state.product);
+  const { product } = useSelector((state) => state.product);
   console.log(product);
 
  

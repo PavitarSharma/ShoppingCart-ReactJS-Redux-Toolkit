@@ -1,7 +1,7 @@
 import Slider from "@mui/material/Slider";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setPriceFilter, setRatingFilter, setDiscountFilter, setCategoryFilter } from "../redux/features/filterSlice";
+import { setPriceFilter, setRatingFilter, setDiscountFilter } from "../redux/features/filterSlice";
 
 const SidebarFilterPanel = ({ categories }) => {
     const dispatch = useDispatch();

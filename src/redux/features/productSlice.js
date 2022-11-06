@@ -9,8 +9,13 @@ export const STATUSES = Object.freeze({
 
 export const fetchProducts = createAsyncThunk(
   "products/fetch",
-  async () => {
-    const res = await axios.get(baseURL);
+  async (category) => {
+    let link = `${baseURL}`
+
+    if(category) {
+      link = `${baseURL}?category=${category}`
+    }
+    const res = await axios.get(link);
     const data = await res.data;
     return data;
   }
