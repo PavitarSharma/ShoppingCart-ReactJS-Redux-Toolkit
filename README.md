@@ -1,6 +1,7 @@
-# Getting Started with Create React App
+# Shopping Cart Website ReactJS Redux Toolkit
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Website Link: -> https://shoppingcart-react-reduxtoolkit.netlify.app
+
 I used github and netlify for deployment for this projects.
 GitHub for code bundler and netlify for build my localhost
 URL to public URL where anyone can see my projects.
